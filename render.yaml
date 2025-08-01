@@ -5,9 +5,15 @@ services:
     runtime: python
     region: oregon
     plan: free
-    repo: https://github.com/your-username/your-repo-name  # <- change to your actual GitHub repo
+    repo: https://github.com/2022363409yenni-byte/backend  # <- your actual repo
     branch: main
-    buildCommand: pip install -r requirements.txt
+    buildCommand: |
+      export CARGO_HOME=$HOME/.cargo
+      export RUSTUP_HOME=$HOME/.rustup
+      export PATH="$CARGO_HOME/bin:$PATH"
+      curl https://sh.rustup.rs -sSf | sh -s -- -y
+      pip install --upgrade pip
+      pip install --prefer-binary -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
     autoDeploy: true
     envVars:
